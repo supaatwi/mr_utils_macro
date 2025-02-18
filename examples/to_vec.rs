@@ -7,6 +7,7 @@ struct RecordDetail {
     status: String,
     geofence: String,
     latitude: f64,
+    #[to_vec(format = "{:.2}")]
     longitude: f64,
     created_at: String,
     #[to_vec(default = "-")]
@@ -26,7 +27,7 @@ fn main() {
     };
 
     // // Get location data
-    let location = record.to_vec(Some(&["latitude", "longitude", "desc"]));
+    let location = record.to_vec(Some(&["geofence", "latitude", "longitude", "desc"]));
     println!("Location: {:?}", location);
     // // Output: ["37.7749", "-122.4194"]
 
