@@ -1,0 +1,19 @@
+[package]
+name = "mr_utils_macro"
+version = "0.1.0"
+edition = "2021"
+description = "utils attribute for Rust"
+license = "MIT"
+categories = ["development-tools"]
+repository = "https://github.com/supaatwi/mr_env_plus"
+documentation = "https://github.com/supaatwi/mr_env_plus/blob/main/README.md"
+authors = ["Supaat Wisessued <supaat.wi@gmail.com>"]
+keywords = ["tools"]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2.0", features = ["full"] }
+quote = "1.0"
+proc-macro2 = "1.0"
