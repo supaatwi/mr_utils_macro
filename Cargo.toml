@@ -5,8 +5,8 @@ edition = "2021"
 description = "utils attribute for Rust"
 license = "MIT"
 categories = ["development-tools"]
-repository = "https://github.com/supaatwi/mr_env_plus"
-documentation = "https://github.com/supaatwi/mr_env_plus/blob/main/README.md"
+repository = "https://github.com/supaatwi/mr_utils_macro.git"
+documentation = "https://github.com/supaatwi/mr_utils_macro.git/blob/main/README.md"
 authors = ["Supaat Wisessued <supaat.wi@gmail.com>"]
 keywords = ["tools"]
 
