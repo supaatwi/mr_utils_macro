@@ -82,12 +82,12 @@ pub(crate) fn impl_to_vec(input: &DeriveInput) -> TokenStream {
                 quote! {
                     self.#ident.as_ref().map_or_else(
                         || #default_str.to_string(),
-                        |v| #func(&v)
+                        |v| #func(&v.to_string())
                     )
                 }
             } else {
                 quote! {
-                    #func(&self.#ident)
+                    #func(&self.#ident.to_string())
                 }
             }
         } else if *is_option {

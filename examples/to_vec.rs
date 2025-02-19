@@ -8,7 +8,7 @@ fn add_status_prefix(value: &str) -> String {
 fn format_location(value: &str) -> String {
     format!("Location: {}", value)
 }
-fn format_lng(value: &f64) -> String {
+fn format_lng(value: &str) -> String {
     format!("Lng: {}", value)
 }
 
