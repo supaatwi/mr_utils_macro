@@ -57,12 +57,8 @@ fn main() {
         }
     ];
    
-    #[cfg(feature = "waylar")]
-    {
-      
-        println!("With number: {:?}", record_vec.to_with_number_list(Some(&["status", "geofence"])));
-        println!("to_first_row_with : {:?}", record_vec.to_first_row_with(None, "Header"));
-    }
+    println!("With number: {:?}", record_vec.to_with_number_list(Some(&["status", "geofence"])));
+    println!("to_first_row_with : {:?}", record_vec.to_first_row_with(None, "Header"));
 
 
     // Get all fields
