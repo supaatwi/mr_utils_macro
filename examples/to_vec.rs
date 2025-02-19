@@ -1,13 +1,22 @@
 use mr_utils_macro::ToVec;
 
+// Custom formatting functions
+fn add_status_prefix(value: &str) -> String {
+    format!("Status: {}", value)
+}
 
-// Struct for database record
+fn format_location(value: &str) -> String {
+    format!("Location: {}", value)
+}
+
 #[derive(ToVec)]
 struct RecordDetail {
+    #[to_vec(deserialize_with = "add_status_prefix")]
     status: String,
+    #[to_vec(deserialize_with = "format_location")]
     geofence: String,
     latitude: f64,
-    #[to_vec(format = "{:.2}")]
+    #[to_vec(format = "{:.2}", )]
     longitude: f64,
     created_at: String,
     #[to_vec(default = "-")]
@@ -15,8 +24,6 @@ struct RecordDetail {
 }
 
 fn main() {
-  
-
     let record = RecordDetail {
         status: "Active".to_string(),
         geofence: "Zone A".to_string(),
@@ -26,9 +33,13 @@ fn main() {
         desc: None
     };
 
-    // // Get location data
-    let location = record.to_vec(Some(&["geofence", "latitude", "longitude", "desc"]));
-    println!("Location: {:?}", location);
-    // // Output: ["37.7749", "-122.4194"]
+    // Get all fields
+    let all = record.to_vec(None);
+    println!("All fields: {:?}", all);
+    // Output: ["Status: Active", "Location: Zone A", "37.7749", "-122.42", "2024-02-18T10:00:00Z", "-"]
 
+    // Get specific fields
+    let location = record.to_vec(Some(&["status", "geofence"]));
+    println!("Location info: {:?}", location);
+    // Output: ["Status: Active", "Location: Zone A"]
 }
