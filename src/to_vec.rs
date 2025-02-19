@@ -82,12 +82,12 @@ pub(crate) fn impl_to_vec(input: &DeriveInput) -> TokenStream {
                 quote! {
                     self.#ident.as_ref().map_or_else(
                         || #default_str.to_string(),
-                        |v| #func(&v.to_string())
+                        |v| #func(&v)
                     )
                 }
             } else {
                 quote! {
-                    #func(&self.#ident.to_string())
+                    #func(&self.#ident)
                 }
             }
         } else if *is_option {
@@ -118,6 +118,50 @@ pub(crate) fn impl_to_vec(input: &DeriveInput) -> TokenStream {
     });
 
     let gen = quote! {
+
+        pub trait VecExt {
+            // fn to_test(&self) -> String;
+    
+            #[cfg(feature = "waylar")]
+            fn to_with_number_list(&self, fields: Option<&[&str]>) -> Vec<Vec<String>>;
+            #[cfg(feature = "waylar")]
+            fn to_first_row_with(&self, fields: Option<&[&str]>, value: &str) -> Vec<Vec<String>>;
+        }
+    
+        impl VecExt for Vec<#name> {
+            // fn to_test(&self) -> String {
+            //     String::from("Hello Test")
+            // }
+    
+            #[cfg(feature = "waylar")]
+            fn to_with_number_list(&self, fields: Option<&[&str]>) -> Vec<Vec<String>> {
+                self.iter()
+                    .enumerate()
+                    .map(|(index, item)| {
+                        let mut values = item.to_vec(fields);
+                        values.insert(0, format!("{}", index + 1));
+                        values
+                    })
+                    .collect()
+            }
+
+            #[cfg(feature = "waylar")]
+            fn to_first_row_with(&self, fields: Option<&[&str]>, value: &str) -> Vec<Vec<String>> {
+                self.iter()
+                    .enumerate()
+                    .map(|(index, item)| {
+                        let mut values = item.to_vec(fields);
+                        if index == 0 {
+                            values.insert(0, value.clone().to_string());
+                        } else {
+                            values.insert(0, "".to_string());
+                        }
+                        values
+                    })
+                    .collect()
+            }
+        }
+
         impl #name {
             pub fn to_vec(&self, fields: Option<&[&str]>) -> Vec<String> {
                 let all_fields: &[(&str, String)] = &[
