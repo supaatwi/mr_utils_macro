@@ -121,7 +121,7 @@ pub(crate) fn impl_to_vec(input: &DeriveInput) -> TokenStream {
 
         pub trait VecExt {
             // fn to_test(&self) -> String;
-    
+            fn to_vec_vec_string(&self, fields: Option<&[&str]>) -> Vec<Vec<String>>;
             fn to_with_number_list(&self, fields: Option<&[&str]>) -> Vec<Vec<String>>;
             fn to_first_row_with(&self, fields: Option<&[&str]>, value: &str) -> Vec<Vec<String>>;
         }
@@ -130,7 +130,14 @@ pub(crate) fn impl_to_vec(input: &DeriveInput) -> TokenStream {
             // fn to_test(&self) -> String {
             //     String::from("Hello Test")
             // }
-    
+            fn to_vec_vec_string(&self, fields: Option<&[&str]>) -> Vec<Vec<String>> {
+                self.iter()
+                    .enumerate()
+                    .map(|(index, item)| {
+                        item.to_vec(fields)
+                    })
+                    .collect()
+            }
             fn to_with_number_list(&self, fields: Option<&[&str]>) -> Vec<Vec<String>> {
                 self.iter()
                     .enumerate()
